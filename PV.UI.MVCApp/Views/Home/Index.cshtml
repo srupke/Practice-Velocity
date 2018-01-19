@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "Practice Velocity - Coding Problem - MVC Application";
+}
+
+<h2>Practice Velocity - Coding Problem - MVC Application</h2>
+
+<br />
+
+<table>
+    <tr>
+        <td>
+            @Html.Label("labelEventProvider", "Provider:")
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>
+            @Html.DropDownList("ddlEventProvider")
+        </td>
+        <td><input type="button" name="btnGetResults" value="Get Results" onclick="GetResults();"/></td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <br />
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <div id="results"></div>
+        </td>
+    </tr>
+</table>
+
+<script type="text/javascript">
+    function GetResults() {
+        
+        var e = document.getElementById("ddlEventProvider");
+        var providerName = e.options[e.selectedIndex].text;
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetResults", "Home")',
+            //contentType: "application/json; charset=utf-8",
+            data: { providerName: providerName },
+            //dataType: "json",
+            success: function (data) {
+                $('#results').html(data);
+            },
+            error: function () { alert("Error Occurred.") }
+        });
+
+    }
+</script>
